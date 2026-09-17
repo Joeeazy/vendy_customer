@@ -1,0 +1,119 @@
+/*
+ * Vendy design tokens: Nairobi signwriting and enamel workshop paint.
+ * Flat colour, heavy blocking, no gradients, no shadows, high contrast.
+ * See vendy-ui-design-prompt.md for the rules these encode.
+ */
+
+@theme {
+  /* Only the brand palette exists, so off-palette colours can't creep in. */
+  --color-*: initial;
+  --color-ink: #12211c;
+  --color-ink-80: #3a4842;
+  --color-ink-12: rgb(18 33 28 / 0.12);
+  --color-paper: #e6e7e1;
+  --color-chalk: #f6f7f3;
+  --color-duka: #1b6b4c;
+  --color-duka-deep: #0f4632;
+  --color-duka-soft: #dcebe3;
+  --color-sign: #f5b301;
+  --color-sign-soft: #fdf0ce;
+  --color-clay: #be3f2b;
+  --color-clay-soft: #f7e0dc;
+  --color-slate: #5c6660;
+
+  --font-display: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans Variable', 'IBM Plex Sans', system-ui, sans-serif;
+
+  /* 1.25 ratio on a 16px base. */
+  --text-display-xl: 2.5rem;
+  --text-display-xl--line-height: 2.75rem;
+  --text-display-l: 2rem;
+  --text-display-l--line-height: 2.25rem;
+  --text-display-m: 1.5rem;
+  --text-display-m--line-height: 1.75rem;
+  --text-title: 1.25rem;
+  --text-title--line-height: 1.75rem;
+  --text-body-l: 1.0625rem;
+  --text-body-l--line-height: 1.625rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.375rem;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.125rem;
+
+  /* 4px on inputs and chips, 10px on cards, 0 on full-bleed sections. */
+  --radius-sm: 4px;
+  --radius-card: 10px;
+
+  /* Depth comes from borders and colour blocking, never shadows. */
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+}
+
+/* Condensed Archivo: the signwriting voice for headlines, names and numbers. */
+@utility font-condensed {
+  font-stretch: 75%;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The standard edge: 1.5px ink at 12%. */
+@utility hairline {
+  border: 1.5px solid var(--color-ink-12);
+}
+
+@utility hairline-b {
+  border-bottom: 1.5px solid var(--color-ink-12);
+}
+
+@utility hairline-t {
+  border-top: 1.5px solid var(--color-ink-12);
+}
+
+/* Paper grain, 4%: stops flat colour looking like unstyled CSS. */
+@utility bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.07 0 0 0 0 0.13 0 0 0 0 0.11 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Corrugated iron: 6px vertical lines. Once per page, never on cards. */
+@utility bg-mabati {
+  background-image: repeating-linear-gradient(90deg, rgb(18 33 28 / 0.06) 0 1px, transparent 1px 6px);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-duka);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-duka-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
