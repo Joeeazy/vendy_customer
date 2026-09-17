@@ -1,4 +1,13 @@
-import { Droplet, Laptop, type LucideIcon, Refrigerator, Smartphone, Sparkles, Square, Zap } from 'lucide-react';
+import {
+  Droplet,
+  Laptop,
+  type LucideIcon,
+  Refrigerator,
+  Smartphone,
+  Sparkles,
+  Square,
+  Zap,
+} from 'lucide-react';
 
 import type { Category } from '@/api/types';
 
@@ -12,7 +21,14 @@ const BLOCKS = [
   'bg-chalk text-ink hairline',
 ] as const;
 
-const PREFERRED_ORDER = ['phone-repair', 'laptop-repair', 'plumbing', 'electrical', 'cleaning', 'appliance-repair'];
+const PREFERRED_ORDER = [
+  'phone-repair',
+  'laptop-repair',
+  'plumbing',
+  'electrical',
+  'cleaning',
+  'appliance-repair',
+];
 
 const ICONS: Record<string, LucideIcon> = {
   smartphone: Smartphone,

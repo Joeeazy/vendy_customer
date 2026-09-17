@@ -58,7 +58,9 @@ export function ServiceSearch({
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
       setOpen(true);
-      setActive((current) => (current + (event.key === 'ArrowDown' ? 1 : -1) + matches.length) % matches.length);
+      setActive(
+        (current) => (current + (event.key === 'ArrowDown' ? 1 : -1) + matches.length) % matches.length,
+      );
     } else if (event.key === 'Escape') {
       setOpen(false);
     }
@@ -69,7 +71,10 @@ export function ServiceSearch({
   return (
     <form role="search" onSubmit={onSubmit} className={cn('flex flex-col gap-2 sm:flex-row', className)}>
       <div className="relative flex-1">
-        <Search aria-hidden="true" className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-slate" />
+        <Search
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-slate"
+        />
         <input
           type="search"
           role="combobox"
@@ -95,7 +100,11 @@ export function ServiceSearch({
           )}
         />
         {expanded && (
-          <ul id={listId} role="listbox" className="absolute top-full right-0 left-0 z-20 mt-1 rounded-card bg-chalk p-1.5 hairline">
+          <ul
+            id={listId}
+            role="listbox"
+            className="absolute top-full right-0 left-0 z-20 mt-1 rounded-card bg-chalk p-1.5 hairline"
+          >
             {matches.map((option, index) => (
               <li
                 key={option.slug}
@@ -108,7 +117,10 @@ export function ServiceSearch({
                   go(option);
                 }}
                 onMouseEnter={() => setActive(index)}
-                className={cn('flex cursor-pointer items-baseline justify-between gap-3 rounded-sm px-3 py-2.5', index === active && 'bg-paper')}
+                className={cn(
+                  'flex cursor-pointer items-baseline justify-between gap-3 rounded-sm px-3 py-2.5',
+                  index === active && 'bg-paper',
+                )}
               >
                 <span className="font-semibold">{option.name}</span>
                 <span className="text-caption text-slate">{option.categoryName}</span>
@@ -117,7 +129,11 @@ export function ServiceSearch({
           </ul>
         )}
       </div>
-      {withArea && <AreaSelect className={cn('sm:w-56', compact ? '[&_select]:h-12' : '[&_select]:h-16 [&_select]:text-body-l')} />}
+      {withArea && (
+        <AreaSelect
+          className={cn('sm:w-56', compact ? '[&_select]:h-12' : '[&_select]:h-16 [&_select]:text-body-l')}
+        />
+      )}
       <Button type="submit" size={compact ? 'md' : 'lg'} className={cn(!compact && 'sm:w-40')}>
         Search
       </Button>

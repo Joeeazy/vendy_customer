@@ -12,7 +12,15 @@ const PROMISES = [
 ];
 
 /** Form on paper; on wide screens, the promise on duka green beside it. */
-export function AuthShell({ title, lead, children }: { title: string; lead?: ReactNode; children: ReactNode }) {
+export function AuthShell({
+  title,
+  lead,
+  children,
+}: {
+  title: string;
+  lead?: ReactNode;
+  children: ReactNode;
+}) {
   return (
     <div className="grid min-h-dvh lg:grid-cols-[minmax(0,1fr)_36rem]">
       <main className="flex flex-col bg-grain px-4 py-6 sm:px-10">

@@ -25,7 +25,9 @@ function FilterFields({ state, onChange }: Props) {
         <Select
           aria-label="Distance"
           value={state.maxDistance ?? ''}
-          onChange={(event) => onChange({ maxDistance: event.target.value ? Number(event.target.value) : null })}
+          onChange={(event) =>
+            onChange({ maxDistance: event.target.value ? Number(event.target.value) : null })
+          }
         >
           <option value="">Anyone who comes to you</option>
           {DISTANCES.map((metres) => (
@@ -47,7 +49,10 @@ function FilterFields({ state, onChange }: Props) {
                 type="button"
                 aria-pressed={selected}
                 onClick={() => onChange({ minJobs: threshold })}
-                className={cn('h-11 rounded-sm text-body font-semibold', selected ? 'bg-ink text-paper' : 'bg-chalk hairline hover:bg-paper')}
+                className={cn(
+                  'h-11 rounded-sm text-body font-semibold',
+                  selected ? 'bg-ink text-paper' : 'bg-chalk hairline hover:bg-paper',
+                )}
               >
                 {threshold == null ? 'Any' : `${threshold}+`}
               </button>
@@ -76,7 +81,9 @@ function FilterFields({ state, onChange }: Props) {
             Apply
           </Button>
         </form>
-        {state.maxPrice != null && <p className="mt-1.5 text-caption text-slate">Showing prices up to {kes(state.maxPrice)}</p>}
+        {state.maxPrice != null && (
+          <p className="mt-1.5 text-caption text-slate">Showing prices up to {kes(state.maxPrice)}</p>
+        )}
       </fieldset>
 
       {hasFilters(state) && (

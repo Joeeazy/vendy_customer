@@ -33,10 +33,17 @@ export function MessagesView({ conversationId }: { conversationId?: string }) {
               conversationId && 'hidden',
             )}
           >
-            <h1 className="px-4 pt-6 pb-3 font-display text-display-l font-extrabold font-condensed hairline-b">Messages</h1>
+            <h1 className="px-4 pt-6 pb-3 font-display text-display-l font-extrabold font-condensed hairline-b">
+              Messages
+            </h1>
             <ConversationList activeId={conversationId} />
           </aside>
-          <div className={cn('min-h-0 flex-1', !conversationId && 'hidden lg:flex lg:items-center lg:justify-center')}>
+          <div
+            className={cn(
+              'min-h-0 flex-1',
+              !conversationId && 'hidden lg:flex lg:items-center lg:justify-center',
+            )}
+          >
             {conversationId ? (
               <ChatThread key={conversationId} conversationId={conversationId} conversation={conversation} />
             ) : (

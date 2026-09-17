@@ -30,7 +30,9 @@ export function priceChoices(services: OfferedService[]): PriceChoice[] {
       value: `quote:${service.service_type_id}`,
       serviceTypeId: service.service_type_id,
       serviceName: service.name,
-      label: service.price_items.length ? `${service.name} · something else, ask for a price` : `${service.name} · ask for a price`,
+      label: service.price_items.length
+        ? `${service.name} · something else, ask for a price`
+        : `${service.name} · ask for a price`,
       item: null,
     },
   ]);

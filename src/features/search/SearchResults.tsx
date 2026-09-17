@@ -102,7 +102,8 @@ export function SearchResults({ categories }: { categories: Category[] }) {
           },
         }),
       ),
-    getNextPageParam: (last) => (last.offset + last.count < last.total ? last.offset + last.count : undefined),
+    getNextPageParam: (last) =>
+      last.offset + last.count < last.total ? last.offset + last.count : undefined,
   });
 
   if (!service) {
@@ -117,7 +118,8 @@ export function SearchResults({ categories }: { categories: Category[] }) {
     );
   }
 
-  const siblings = category?.service_types ?? categories.find((c) => c.slug === service.categorySlug)?.service_types ?? [];
+  const siblings =
+    category?.service_types ?? categories.find((c) => c.slug === service.categorySlug)?.service_types ?? [];
   const vendors = results.data?.pages.flatMap((page) => page.items) ?? [];
   const total = results.data?.pages[0]?.total ?? 0;
 
@@ -125,21 +127,29 @@ export function SearchResults({ categories }: { categories: Category[] }) {
     <div className="mx-auto flex max-w-[1440px] flex-col lg:flex-row">
       <SearchFilters state={state} onChange={update} />
 
-      <section className="min-w-0 flex-1 px-4 pb-12 sm:px-6 lg:border-l-[1.5px] lg:border-ink-12 lg:px-12" aria-labelledby="results-heading">
+      <section
+        className="min-w-0 flex-1 px-4 pb-12 sm:px-6 lg:border-l-[1.5px] lg:border-ink-12 lg:px-12"
+        aria-labelledby="results-heading"
+      >
         <div className="flex flex-col gap-4 py-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h1 id="results-heading" className="font-display text-display-m font-bold lg:text-display-l">
               {service.name} in {areaLabel}
             </h1>
             <p className="mt-1 text-body text-slate" aria-live="polite">
-              {results.isSuccess ? `${total} ${total === 1 ? 'vendor matches' : 'vendors match'} ${hasFilters(state) ? 'your filters' : 'here'}` : ' '}
+              {results.isSuccess
+                ? `${total} ${total === 1 ? 'vendor matches' : 'vendors match'} ${hasFilters(state) ? 'your filters' : 'here'}`
+                : ' '}
             </p>
           </div>
           <SortSelect state={state} onChange={update} />
         </div>
 
         {siblings.length > 1 && (
-          <nav aria-label={`Other ${service.categoryName} services`} className="-mx-1 mb-2 flex gap-1.5 overflow-x-auto px-1 pb-2">
+          <nav
+            aria-label={`Other ${service.categoryName} services`}
+            className="-mx-1 mb-2 flex gap-1.5 overflow-x-auto px-1 pb-2"
+          >
             {siblings.map((sibling) => (
               <button
                 key={sibling.slug}
@@ -172,7 +182,9 @@ export function SearchResults({ categories }: { categories: Category[] }) {
             title={`No ${service.name.toLowerCase()} vendors in ${areaLabel} yet.`}
             actions={
               hasFilters(state) ? (
-                <Button onClick={() => update({ minJobs: null, maxPrice: null, maxDistance: null })}>Clear filters</Button>
+                <Button onClick={() => update({ minJobs: null, maxPrice: null, maxDistance: null })}>
+                  Clear filters
+                </Button>
               ) : (
                 <>
                   <AreaSelect className="[&_select]:h-12" />
@@ -183,7 +195,9 @@ export function SearchResults({ categories }: { categories: Category[] }) {
               )
             }
           >
-            {hasFilters(state) ? 'Your filters leave nobody. Try clearing them.' : 'Try a nearby area, or look for a related service.'}
+            {hasFilters(state)
+              ? 'Your filters leave nobody. Try clearing them.'
+              : 'Try a nearby area, or look for a related service.'}
           </EmptyState>
         ) : (
           <>
@@ -196,7 +210,13 @@ export function SearchResults({ categories }: { categories: Category[] }) {
               ))}
             </ul>
             {results.hasNextPage && (
-              <Button variant="secondary" block className="mt-4" loading={results.isFetchingNextPage} onClick={() => void results.fetchNextPage()}>
+              <Button
+                variant="secondary"
+                block
+                className="mt-4"
+                loading={results.isFetchingNextPage}
+                onClick={() => void results.fetchNextPage()}
+              >
                 Show more vendors
               </Button>
             )}

@@ -10,7 +10,10 @@ const sizes: Record<Size, string> = {
 };
 
 export function initials(name: string): string {
-  const words = name.replace(/[^\p{L}\p{N}\s]/gu, ' ').split(/\s+/).filter(Boolean);
+  const words = name
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    .split(/\s+/)
+    .filter(Boolean);
   const letters = words.length > 1 ? `${words[0]![0]}${words[1]![0]}` : (words[0] ?? '?').slice(0, 2);
   return letters.toUpperCase();
 }
@@ -29,7 +32,11 @@ export function Avatar({
   tone?: 'soft' | 'chalk' | 'duka';
   className?: string;
 }) {
-  const toneClass = { soft: 'bg-duka-soft text-duka-deep', chalk: 'bg-chalk text-slate hairline', duka: 'bg-duka text-chalk' }[tone];
+  const toneClass = {
+    soft: 'bg-duka-soft text-duka-deep',
+    chalk: 'bg-chalk text-slate hairline',
+    duka: 'bg-duka text-chalk',
+  }[tone];
   return (
     <span
       className={cn(

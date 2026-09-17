@@ -80,13 +80,21 @@ export function BookingsList() {
   });
 
   const reviewable = new Set(awaiting.data?.map((item) => item.booking_id));
-  const items = (bookings.data?.items ?? []).filter((booking) => isActive(booking.status) === (tab === 'active'));
+  const items = (bookings.data?.items ?? []).filter(
+    (booking) => isActive(booking.status) === (tab === 'active'),
+  );
 
   return (
     <main className="mx-auto max-w-3xl pt-6 pb-12 sm:px-6">
       <div className="flex flex-col gap-4 px-4 pb-4 sm:px-0">
         <h1 className="font-display text-display-l font-extrabold font-condensed">My bookings</h1>
-        <SegmentedControl label="Bookings" options={TABS} value={tab} onChange={setTab} className="sm:max-w-sm" />
+        <SegmentedControl
+          label="Bookings"
+          options={TABS}
+          value={tab}
+          onChange={setTab}
+          className="sm:max-w-sm"
+        />
       </div>
 
       {(!user || bookings.isPending) && (

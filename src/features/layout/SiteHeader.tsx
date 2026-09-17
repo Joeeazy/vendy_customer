@@ -1,11 +1,13 @@
 'use client';
 
+import { Bell } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 import { AreaSelect } from '@/features/area/AreaSelect';
 import { useSession } from '@/features/auth/session';
+import { useNotifications } from '@/features/notifications/NotificationsList';
 import { Avatar } from '@/ui/Avatar';
 import { buttonClasses } from '@/ui/Button';
 import { cn } from '@/ui/cn';
@@ -20,10 +22,16 @@ function AccountMenu() {
 
   return (
     <details className="group relative">
-      <summary className="flex cursor-pointer list-none items-center rounded-sm [&::-webkit-details-marker]:hidden" aria-label="Your account">
+      <summary
+        className="flex cursor-pointer list-none items-center rounded-sm [&::-webkit-details-marker]:hidden"
+        aria-label="Your account"
+      >
         <Avatar name={user.full_name} size="sm" />
       </summary>
-      <nav className="absolute right-0 z-20 mt-2 flex w-56 flex-col rounded-card bg-chalk p-1.5 hairline" aria-label="Account">
+      <nav
+        className="absolute right-0 z-20 mt-2 flex w-56 flex-col rounded-card bg-chalk p-1.5 hairline"
+        aria-label="Account"
+      >
         <p className="px-3 pt-2 pb-1 text-caption text-slate">{user.email}</p>
         {[
           ['/bookings', 'My bookings'],
@@ -46,6 +54,25 @@ function AccountMenu() {
         </button>
       </nav>
     </details>
+  );
+}
+
+function NotificationsLink() {
+  const notifications = useNotifications(true);
+  const unread = notifications.data?.unread_count ?? 0;
+  return (
+    <Link
+      href="/notifications"
+      className="relative rounded-sm p-2 text-ink-80 hover:text-ink"
+      aria-label={unread ? `Notifications, ${unread} unread` : 'Notifications'}
+    >
+      <Bell aria-hidden="true" className="size-5" />
+      {unread > 0 && (
+        <span className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-sm bg-duka px-1 text-[0.6875rem] font-bold text-chalk tabular">
+          {unread > 9 ? '9+' : unread}
+        </span>
+      )}
+    </Link>
   );
 }
 
@@ -80,13 +107,20 @@ export function SiteHeader({ children, className }: { children?: ReactNode; clas
           </a>
           {status === 'signed-in' ? (
             <>
-              <Link href="/bookings" className="hidden text-body text-ink-80 hover:text-ink md:inline lg:hidden">
+              <Link
+                href="/bookings"
+                className="hidden text-body text-ink-80 hover:text-ink md:inline lg:hidden"
+              >
                 My bookings
               </Link>
+              <NotificationsLink />
               <AccountMenu />
             </>
           ) : (
-            <Link href="/sign-in" className={buttonClasses({ size: 'sm', className: status === 'loading' ? 'invisible' : '' })}>
+            <Link
+              href="/sign-in"
+              className={buttonClasses({ size: 'sm', className: status === 'loading' ? 'invisible' : '' })}
+            >
               Sign in
             </Link>
           )}

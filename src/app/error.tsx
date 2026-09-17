@@ -22,7 +22,8 @@ export default function ErrorPage({ reset }: { error: Error & { digest?: string 
           </>
         }
       >
-        It&apos;s on our side, not yours. If it keeps happening, check your connection and try again in a minute.
+        It&apos;s on our side, not yours. If it keeps happening, check your connection and try again in a
+        minute.
       </EmptyState>
     </main>
   );

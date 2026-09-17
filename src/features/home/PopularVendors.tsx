@@ -14,7 +14,8 @@ export function PopularVendors() {
 
   const popular = useQuery({
     queryKey: keys.popular(point?.lat ?? 0, point?.lng ?? 0),
-    queryFn: () => unwrap(api.GET('/search/popular', { params: { query: { lat: point!.lat, lng: point!.lng } } })),
+    queryFn: () =>
+      unwrap(api.GET('/search/popular', { params: { query: { lat: point!.lat, lng: point!.lng } } })),
     enabled: point != null,
   });
 
@@ -26,13 +27,20 @@ export function PopularVendors() {
         <h2 id="popular-heading" className="font-display text-title font-bold lg:text-display-m">
           Popular in {label}
         </h2>
-        <Link href={slug ? `/search?area=${slug}` : '/search'} className="text-body font-semibold text-duka hover:underline">
+        <Link
+          href={slug ? `/search?area=${slug}` : '/search'}
+          className="text-body font-semibold text-duka hover:underline"
+        >
           See all
         </Link>
       </div>
 
       {popular.isPending ? (
-        <div className="grid gap-4 py-4 lg:grid-cols-3" aria-busy="true" aria-label={`Finding vendors in ${label}`}>
+        <div
+          className="grid gap-4 py-4 lg:grid-cols-3"
+          aria-busy="true"
+          aria-label={`Finding vendors in ${label}`}
+        >
           {[0, 1, 2].map((index) => (
             <div key={index} className="flex gap-4">
               <Skeleton className="size-16" />

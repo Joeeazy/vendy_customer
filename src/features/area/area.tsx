@@ -11,8 +11,7 @@ import type { Neighbourhood } from '@/api/types';
  */
 
 type Area =
-  | { kind: 'neighbourhood'; neighbourhood: Neighbourhood }
-  | { kind: 'near-me'; lat: number; lng: number };
+  { kind: 'neighbourhood'; neighbourhood: Neighbourhood } | { kind: 'near-me'; lat: number; lng: number };
 
 type AreaContextValue = {
   neighbourhoods: Neighbourhood[];
@@ -31,7 +30,11 @@ const DEFAULT_SLUG = 'kilimani';
 const AreaContext = createContext<AreaContextValue | null>(null);
 
 function defaultNeighbourhood(neighbourhoods: Neighbourhood[]): Neighbourhood | undefined {
-  return neighbourhoods.find((n) => n.is_launch_area) ?? neighbourhoods.find((n) => n.slug === DEFAULT_SLUG) ?? neighbourhoods[0];
+  return (
+    neighbourhoods.find((n) => n.is_launch_area) ??
+    neighbourhoods.find((n) => n.slug === DEFAULT_SLUG) ??
+    neighbourhoods[0]
+  );
 }
 
 function readStored(neighbourhoods: Neighbourhood[]): Area | null {
@@ -58,9 +61,17 @@ function store(value: string) {
   }
 }
 
-export function AreaProvider({ neighbourhoods, children }: { neighbourhoods: Neighbourhood[]; children: ReactNode }) {
+export function AreaProvider({
+  neighbourhoods,
+  children,
+}: {
+  neighbourhoods: Neighbourhood[];
+  children: ReactNode;
+}) {
   const fallback = defaultNeighbourhood(neighbourhoods);
-  const [area, setArea] = useState<Area | null>(fallback ? { kind: 'neighbourhood', neighbourhood: fallback } : null);
+  const [area, setArea] = useState<Area | null>(
+    fallback ? { kind: 'neighbourhood', neighbourhood: fallback } : null,
+  );
 
   useEffect(() => {
     const stored = readStored(neighbourhoods);

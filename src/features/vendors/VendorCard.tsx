@@ -28,7 +28,12 @@ export function VendorCard({ vendor, emphasis = false }: { vendor: VendorCardDat
   const href = `/vendors/${vendor.slug}`;
   return (
     <article className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-3 py-5 sm:grid-cols-[auto_1fr_auto] sm:gap-x-6 sm:py-6">
-      <Avatar name={vendor.display_name} size="md" className="sm:size-24 sm:text-display-m" tone={emphasis ? 'soft' : 'chalk'} />
+      <Avatar
+        name={vendor.display_name}
+        size="md"
+        className="sm:size-24 sm:text-display-m"
+        tone={emphasis ? 'soft' : 'chalk'}
+      />
 
       <div className="min-w-0">
         <h3 className="flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -43,7 +48,9 @@ export function VendorCard({ vendor, emphasis = false }: { vendor: VendorCardDat
         </p>
         <div className="mt-3 flex flex-wrap items-end gap-x-6 gap-y-2">
           <div>
-            <span className="block font-display text-display-l leading-none font-extrabold tabular">{vendor.jobs_completed}</span>
+            <span className="block font-display text-display-l leading-none font-extrabold tabular">
+              {vendor.jobs_completed}
+            </span>
             <span className="text-caption text-slate">jobs completed</span>
           </div>
           <div className="text-caption leading-snug">
@@ -55,11 +62,20 @@ export function VendorCard({ vendor, emphasis = false }: { vendor: VendorCardDat
 
       <div className="col-span-2 flex items-center justify-between gap-3 sm:col-span-1 sm:w-52 sm:flex-col sm:items-stretch sm:justify-start">
         {vendor.price_from_kes != null ? (
-          <p className="font-display text-title font-bold tabular sm:text-display-m">From {kes(vendor.price_from_kes)}</p>
+          <p className="font-display text-title font-bold tabular sm:text-display-m">
+            From {kes(vendor.price_from_kes)}
+          </p>
         ) : (
           <p className="text-body text-slate">Price on request</p>
         )}
-        <Link href={href} className={buttonClasses({ variant: emphasis ? 'primary' : 'secondary', size: 'md', className: cn('sm:w-full') })}>
+        <Link
+          href={href}
+          className={buttonClasses({
+            variant: emphasis ? 'primary' : 'secondary',
+            size: 'md',
+            className: cn('sm:w-full'),
+          })}
+        >
           View profile
         </Link>
       </div>
@@ -80,12 +96,16 @@ export function VendorRow({ vendor }: { vendor: VendorCardData }) {
         <p className="truncate text-caption text-slate">{vendor.services.slice(0, 3).join(', ')}</p>
         <div className="mt-1.5 flex items-end gap-5">
           <div>
-            <span className="block font-display text-display-m leading-none font-extrabold tabular">{vendor.jobs_completed}</span>
+            <span className="block font-display text-display-m leading-none font-extrabold tabular">
+              {vendor.jobs_completed}
+            </span>
             <span className="text-caption text-slate">jobs completed</span>
           </div>
           <div className="text-caption leading-snug text-slate">
             <span className="block">
-              {vendor.rating_avg != null ? `${vendor.rating_avg.toFixed(1)} (${vendor.rating_count})` : 'New on Vendy'}
+              {vendor.rating_avg != null
+                ? `${vendor.rating_avg.toFixed(1)} (${vendor.rating_count})`
+                : 'New on Vendy'}
             </span>
             <span className="block">{distance(vendor.distance_m)}</span>
           </div>

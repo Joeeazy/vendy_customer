@@ -47,12 +47,19 @@ export function Dialog({
     >
       <div className="flex items-start justify-between gap-4 px-5 pt-5">
         <h2 className="font-display text-display-m font-bold">{title}</h2>
-        <button type="button" onClick={onClose} className="-mt-1 -mr-2 rounded-sm p-2 text-slate hover:text-ink" aria-label="Close">
+        <button
+          type="button"
+          onClick={onClose}
+          className="-mt-1 -mr-2 rounded-sm p-2 text-slate hover:text-ink"
+          aria-label="Close"
+        >
           <X aria-hidden="true" className="size-5" />
         </button>
       </div>
       <div className="px-5 pt-3 pb-5">{children}</div>
-      {footer && <div className="flex flex-col-reverse gap-2 px-5 pb-5 sm:flex-row sm:justify-end">{footer}</div>}
+      {footer && (
+        <div className="flex flex-col-reverse gap-2 px-5 pb-5 sm:flex-row sm:justify-end">{footer}</div>
+      )}
     </dialog>
   );
 }

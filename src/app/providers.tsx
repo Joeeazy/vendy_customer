@@ -21,7 +21,13 @@ function makeQueryClient() {
   });
 }
 
-export function Providers({ neighbourhoods, children }: { neighbourhoods: Neighbourhood[]; children: ReactNode }) {
+export function Providers({
+  neighbourhoods,
+  children,
+}: {
+  neighbourhoods: Neighbourhood[];
+  children: ReactNode;
+}) {
   const [queryClient] = useState(makeQueryClient);
   return (
     <QueryClientProvider client={queryClient}>

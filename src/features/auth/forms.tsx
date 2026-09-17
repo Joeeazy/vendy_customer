@@ -19,7 +19,8 @@ function fieldError(error: unknown, field: string): string | undefined {
 
 /** The form-level message, unless it's already shown next to a field. */
 function FormError({ error }: { error: unknown }) {
-  if (!error || (isApiError(error) && error.status === 422 && Object.keys(error.fieldErrors).length)) return null;
+  if (!error || (isApiError(error) && error.status === 422 && Object.keys(error.fieldErrors).length))
+    return null;
   return <Notice tone="error">{errorMessage(error)}</Notice>;
 }
 
@@ -51,7 +52,14 @@ export function SignInForm() {
     <form onSubmit={onSubmit} className="flex flex-col gap-5">
       <Field label="Email" error={fieldError(login.error, 'email')}>
         {(props) => (
-          <TextInput {...props} type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
+          <TextInput
+            {...props}
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
         )}
       </Field>
       <Field label="Password">
@@ -74,7 +82,10 @@ export function SignInForm() {
         <Link href="/forgot-password" className="text-duka underline-offset-4 hover:underline">
           Forgot password?
         </Link>
-        <Link href={withNext('/sign-up', next)} className="font-semibold text-duka underline-offset-4 hover:underline">
+        <Link
+          href={withNext('/sign-up', next)}
+          className="font-semibold text-duka underline-offset-4 hover:underline"
+        >
           Create an account
         </Link>
       </div>
@@ -86,17 +97,29 @@ export function SignUpForm() {
   const router = useRouter();
   const next = useNextPath();
   const { signIn } = useSession();
-  const [form, setForm] = useState({ full_name: '', email: '', phone: '', password: '', accept_terms: false });
+  const [form, setForm] = useState({
+    full_name: '',
+    email: '',
+    phone: '',
+    password: '',
+    accept_terms: false,
+  });
 
   const signup = useMutation({
-    mutationFn: () => unwrap(api.POST('/auth/signup', { body: { ...form, email: form.email.trim(), full_name: form.full_name.trim() } })),
+    mutationFn: () =>
+      unwrap(
+        api.POST('/auth/signup', {
+          body: { ...form, email: form.email.trim(), full_name: form.full_name.trim() },
+        }),
+      ),
     onSuccess: (session) => {
       signIn(session);
       router.replace(withNext('/verify-email', next));
     },
   });
 
-  const set = (field: keyof typeof form) => (value: string | boolean) => setForm((current) => ({ ...current, [field]: value }));
+  const set = (field: keyof typeof form) => (value: string | boolean) =>
+    setForm((current) => ({ ...current, [field]: value }));
 
   function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -107,15 +130,32 @@ export function SignUpForm() {
     <form onSubmit={onSubmit} className="flex flex-col gap-5">
       <Field label="Full name" error={fieldError(signup.error, 'full_name')}>
         {(props) => (
-          <TextInput {...props} autoComplete="name" required value={form.full_name} onChange={(event) => set('full_name')(event.target.value)} />
+          <TextInput
+            {...props}
+            autoComplete="name"
+            required
+            value={form.full_name}
+            onChange={(event) => set('full_name')(event.target.value)}
+          />
         )}
       </Field>
       <Field label="Email" error={fieldError(signup.error, 'email')}>
         {(props) => (
-          <TextInput {...props} type="email" autoComplete="email" required value={form.email} onChange={(event) => set('email')(event.target.value)} />
+          <TextInput
+            {...props}
+            type="email"
+            autoComplete="email"
+            required
+            value={form.email}
+            onChange={(event) => set('email')(event.target.value)}
+          />
         )}
       </Field>
-      <Field label="Phone" hint="Shared with a vendor only after they confirm your booking." error={fieldError(signup.error, 'phone')}>
+      <Field
+        label="Phone"
+        hint="Shared with a vendor only after they confirm your booking."
+        error={fieldError(signup.error, 'phone')}
+      >
         {(props) => (
           <TextInput
             {...props}
@@ -160,7 +200,10 @@ export function SignUpForm() {
       </Button>
       <p className="text-body">
         Already on Vendy?{' '}
-        <Link href={withNext('/sign-in', next)} className="font-semibold text-duka underline-offset-4 hover:underline">
+        <Link
+          href={withNext('/sign-in', next)}
+          className="font-semibold text-duka underline-offset-4 hover:underline"
+        >
           Sign in
         </Link>
       </p>
@@ -186,7 +229,10 @@ export function VerifyEmailForm() {
   if (status === 'signed-out') {
     return (
       <Notice title="Sign in first">
-        <Link href={withNext('/sign-in', withNext('/verify-email', next))} className="font-semibold text-duka underline">
+        <Link
+          href={withNext('/sign-in', withNext('/verify-email', next))}
+          className="font-semibold text-duka underline"
+        >
           Sign in
         </Link>{' '}
         and then enter the code we emailed you.
@@ -211,7 +257,11 @@ export function VerifyEmailForm() {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5">
-      <Field label="6-digit code" hint={user ? `Sent to ${user.email}. It can take a minute.` : undefined} error={fieldError(verify.error, 'code')}>
+      <Field
+        label="6-digit code"
+        hint={user ? `Sent to ${user.email}. It can take a minute.` : undefined}
+        error={fieldError(verify.error, 'code')}
+      >
         {(props) => (
           <TextInput
             {...props}
@@ -255,7 +305,12 @@ export function ForgotPasswordForm() {
     mutationFn: () => unwrap(api.POST('/auth/password/forgot', { body: { email: email.trim() } })),
   });
   const reset = useMutation({
-    mutationFn: () => unwrap(api.POST('/auth/password/reset', { body: { email: email.trim(), code: code.trim(), new_password: password } })),
+    mutationFn: () =>
+      unwrap(
+        api.POST('/auth/password/reset', {
+          body: { email: email.trim(), code: code.trim(), new_password: password },
+        }),
+      ),
     onSuccess: () => router.replace('/sign-in?reset=1'),
   });
 
@@ -270,7 +325,14 @@ export function ForgotPasswordForm() {
       >
         <Field label="Email" error={fieldError(request.error, 'email')}>
           {(props) => (
-            <TextInput {...props} type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
+            <TextInput
+              {...props}
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
           )}
         </Field>
         <FormError error={request.error} />
@@ -307,7 +369,11 @@ export function ForgotPasswordForm() {
           />
         )}
       </Field>
-      <Field label="New password" hint="At least 8 characters." error={fieldError(reset.error, 'new_password')}>
+      <Field
+        label="New password"
+        hint="At least 8 characters."
+        error={fieldError(reset.error, 'new_password')}
+      >
         {(props) => (
           <TextInput
             {...props}

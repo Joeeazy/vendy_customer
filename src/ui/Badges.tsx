@@ -7,7 +7,11 @@ import { cn } from './cn';
 export function VerifiedMark({ label, className }: { label?: string; className?: string }) {
   return (
     <span className={cn('inline-flex items-center gap-1 font-semibold text-duka', className)}>
-      <BadgeCheck aria-hidden={label ? true : undefined} aria-label={label ? undefined : 'Verified'} className="size-4 fill-duka stroke-chalk" />
+      <BadgeCheck
+        aria-hidden={label ? true : undefined}
+        aria-label={label ? undefined : 'Verified'}
+        className="size-4 fill-duka stroke-chalk"
+      />
       {label && <span className="text-caption">{label}</span>}
     </span>
   );
@@ -23,9 +27,23 @@ const tones: Record<Tone, string> = {
   quiet: 'bg-chalk text-slate hairline',
 };
 
-export function Badge({ tone, children, className }: { tone: Tone; children: ReactNode; className?: string }) {
+export function Badge({
+  tone,
+  children,
+  className,
+}: {
+  tone: Tone;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <span className={cn('inline-flex h-6 items-center rounded-sm px-2 text-caption font-semibold whitespace-nowrap', tones[tone], className)}>
+    <span
+      className={cn(
+        'inline-flex h-6 items-center rounded-sm px-2 text-caption font-semibold whitespace-nowrap',
+        tones[tone],
+        className,
+      )}
+    >
       {children}
     </span>
   );

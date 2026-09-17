@@ -2,7 +2,15 @@
 
 import { ArrowLeft, ArrowRight, Lock } from 'lucide-react';
 import Link from 'next/link';
-import { Fragment, useEffect, useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
+import {
+  Fragment,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+} from 'react';
 
 import { clockTime, firstName, shortDate } from '@/api/format';
 import type { Conversation, Message } from '@/api/types';
@@ -86,7 +94,11 @@ function PendingBubble({ item, onRetry }: { item: Outgoing; onRetry: () => void 
 function RedactionNotice({ otherName }: { otherName: string }) {
   return (
     <li>
-      <Notice tone="warn" icon={<Lock aria-hidden="true" className="size-4" />} title="Contact details stay hidden until the booking is confirmed. You'll get the number then.">
+      <Notice
+        tone="warn"
+        icon={<Lock aria-hidden="true" className="size-4" />}
+        title="Contact details stay hidden until the booking is confirmed. You'll get the number then."
+      >
         Your message was sent without the number. {otherName} can still read the rest.
       </Notice>
     </li>
@@ -126,21 +138,34 @@ function Composer({ onSend, disabled }: { onSend: (body: string) => void; disabl
         placeholder="Write a message"
         className="field-sizing-content max-h-40 min-h-12 flex-1 resize-none rounded-sm bg-chalk px-3.5 py-3 text-body-l hairline placeholder:text-slate"
       />
-      <Button type="submit" className="size-12 shrink-0 px-0" aria-label="Send" disabled={disabled || !body.trim()}>
+      <Button
+        type="submit"
+        className="size-12 shrink-0 px-0"
+        aria-label="Send"
+        disabled={disabled || !body.trim()}
+      >
         <ArrowRight aria-hidden="true" className="size-5" />
       </Button>
     </form>
   );
 }
 
-export function ChatThread({ conversationId, conversation }: { conversationId: string; conversation: Conversation | null }) {
+export function ChatThread({
+  conversationId,
+  conversation,
+}: {
+  conversationId: string;
+  conversation: Conversation | null;
+}) {
   const chat = useConversation(conversationId);
   const scroller = useRef<HTMLDivElement>(null);
   const nearBottom = useRef(true);
   const [loadingOlder, setLoadingOlder] = useState(false);
 
   const otherName = conversation ? firstName(conversation.other_party_name) : 'The vendor';
-  const lastOwnRedacted = chat.messages.findLast((m) => m.sender_role === 'customer' && m.moderation === 'redacted');
+  const lastOwnRedacted = chat.messages.findLast(
+    (m) => m.sender_role === 'customer' && m.moderation === 'redacted',
+  );
   const showNotice =
     lastOwnRedacted && (chat.notice || !conversation || !contactShared(conversation.booking_status));
 
@@ -173,16 +198,24 @@ export function ChatThread({ conversationId, conversation }: { conversationId: s
   const days = chat.messages.map((message) => shortDate(message.created_at));
 
   return (
-    <section className="flex h-full min-h-0 flex-col" aria-label={`Chat with ${conversation?.other_party_name ?? 'vendor'}`}>
+    <section
+      className="flex h-full min-h-0 flex-col"
+      aria-label={`Chat with ${conversation?.other_party_name ?? 'vendor'}`}
+    >
       <header className="flex items-center gap-3 bg-paper px-2 py-2.5 hairline-b sm:px-4">
         <Link href="/messages" className="rounded-sm p-2 lg:hidden" aria-label="All messages">
           <ArrowLeft aria-hidden="true" className="size-5" />
         </Link>
         {conversation && <Avatar name={conversation.other_party_name} size="sm" />}
         <div className="min-w-0 flex-1">
-          <p className="truncate font-display text-title font-bold">{conversation?.other_party_name ?? 'Chat'}</p>
+          <p className="truncate font-display text-title font-bold">
+            {conversation?.other_party_name ?? 'Chat'}
+          </p>
           {conversation && (
-            <Link href={`/bookings/${conversation.booking_id}`} className="block truncate text-caption text-slate hover:text-ink">
+            <Link
+              href={`/bookings/${conversation.booking_id}`}
+              className="block truncate text-caption text-slate hover:text-ink"
+            >
               {conversation.service_name} · {conversation.booking_reference}
             </Link>
           )}
@@ -224,9 +257,13 @@ export function ChatThread({ conversationId, conversation }: { conversationId: s
             const day = days[index];
             return (
               <Fragment key={message.id}>
-                {day !== days[index - 1] && <li className="my-1 text-center text-caption text-slate">{day}</li>}
+                {day !== days[index - 1] && (
+                  <li className="my-1 text-center text-caption text-slate">{day}</li>
+                )}
                 <Bubble message={message} />
-                {showNotice && message.id === lastOwnRedacted?.id && <RedactionNotice otherName={otherName} />}
+                {showNotice && message.id === lastOwnRedacted?.id && (
+                  <RedactionNotice otherName={otherName} />
+                )}
               </Fragment>
             );
           })}
@@ -238,7 +275,10 @@ export function ChatThread({ conversationId, conversation }: { conversationId: s
 
       <footer className="bg-paper px-3 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] hairline-t sm:px-6">
         {chat.isLocked || conversation?.is_locked ? (
-          <LockedRow title="This chat is closed." detail="Chats close when a booking ends. You can still read it here." />
+          <LockedRow
+            title="This chat is closed."
+            detail="Chats close when a booking ends. You can still read it here."
+          />
         ) : (
           <Composer onSend={chat.send} disabled={chat.status !== 'ready'} />
         )}

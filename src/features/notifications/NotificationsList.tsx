@@ -38,7 +38,10 @@ export function NotificationsList() {
   const refresh = () => queryClient.invalidateQueries({ queryKey: keys.notifications });
 
   const readOne = useMutation({
-    mutationFn: (id: string) => unwrap(api.POST('/notifications/{notification_id}/read', { params: { path: { notification_id: id } } })),
+    mutationFn: (id: string) =>
+      unwrap(
+        api.POST('/notifications/{notification_id}/read', { params: { path: { notification_id: id } } }),
+      ),
     onSuccess: refresh,
   });
   const readAll = useMutation({
@@ -85,9 +88,14 @@ export function NotificationsList() {
             const isUnread = !notification.read_at;
             const content = (
               <>
-                <span className={cn('mt-2 size-2 shrink-0 rounded-sm', isUnread ? 'bg-duka' : 'bg-transparent')} aria-hidden="true" />
+                <span
+                  className={cn('mt-2 size-2 shrink-0 rounded-sm', isUnread ? 'bg-duka' : 'bg-transparent')}
+                  aria-hidden="true"
+                />
                 <span className="min-w-0 flex-1">
-                  <span className={cn('block', isUnread ? 'font-semibold' : 'text-ink-80')}>{notification.title}</span>
+                  <span className={cn('block', isUnread ? 'font-semibold' : 'text-ink-80')}>
+                    {notification.title}
+                  </span>
                   <span className="block text-body text-slate">{notification.body}</span>
                 </span>
                 <time dateTime={notification.created_at} className="shrink-0 text-caption text-slate">
@@ -100,7 +108,11 @@ export function NotificationsList() {
               <li key={notification.id} className="hairline-b">
                 {isUnread && <span className="sr-only">Unread: </span>}
                 {href ? (
-                  <Link href={href} className={className} onClick={() => isUnread && readOne.mutate(notification.id)}>
+                  <Link
+                    href={href}
+                    className={className}
+                    onClick={() => isUnread && readOne.mutate(notification.id)}
+                  >
                     {content}
                   </Link>
                 ) : (

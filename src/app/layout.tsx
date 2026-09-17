@@ -12,7 +12,8 @@ import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: { default: 'Vendy · Pata mtu wa kazi', template: '%s · Vendy' },
-  description: 'Find verified plumbers, electricians, cleaners and repair technicians in Nairobi. See real prices and completed jobs before you book.',
+  description:
+    'Find verified plumbers, electricians, cleaners and repair technicians in Nairobi. See real prices and completed jobs before you book.',
   applicationName: 'Vendy',
 };
 

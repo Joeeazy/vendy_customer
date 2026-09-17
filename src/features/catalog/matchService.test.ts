@@ -5,8 +5,18 @@ import { matchServices, type ServiceOption } from './matchService';
 const options: ServiceOption[] = [
   { slug: 'plumbing-leak-repair', name: 'Leak repair', categorySlug: 'plumbing', categoryName: 'Plumbing' },
   { slug: 'blocked-drain', name: 'Blocked drain', categorySlug: 'plumbing', categoryName: 'Plumbing' },
-  { slug: 'phone-screen-replacement', name: 'Screen replacement', categorySlug: 'phone-repair', categoryName: 'Phone repair' },
-  { slug: 'laptop-screen-replacement', name: 'Screen replacement', categorySlug: 'laptop-repair', categoryName: 'Laptop repair' },
+  {
+    slug: 'phone-screen-replacement',
+    name: 'Screen replacement',
+    categorySlug: 'phone-repair',
+    categoryName: 'Phone repair',
+  },
+  {
+    slug: 'laptop-screen-replacement',
+    name: 'Screen replacement',
+    categorySlug: 'laptop-repair',
+    categoryName: 'Laptop repair',
+  },
   { slug: 'home-deep-clean', name: 'Deep clean', categorySlug: 'cleaning', categoryName: 'Cleaning' },
 ];
 

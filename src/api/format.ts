@@ -24,7 +24,9 @@ function dayKey(date: Date): string {
 
 /** 2:00 pm */
 export function clockTime(iso: string): string {
-  return parts(new Date(iso), { hour: 'numeric', minute: '2-digit', hour12: true }).replace(/\s?([ap])\.?m\.?/i, ' $1m').toLowerCase();
+  return parts(new Date(iso), { hour: 'numeric', minute: '2-digit', hour12: true })
+    .replace(/\s?([ap])\.?m\.?/i, ' $1m')
+    .toLowerCase();
 }
 
 /** Today, 2:00 pm · Tomorrow, 9:30 am · Thu 17 Sep, 10:00 am */

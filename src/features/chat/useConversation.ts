@@ -14,7 +14,9 @@ import { chatSocket, type ConnectionState } from './socket';
 const PAGE = 50;
 
 function newClientId(): string {
-  return typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  return typeof crypto.randomUUID === 'function'
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
 type ConversationState = {
@@ -60,7 +62,11 @@ export function useConversation(conversationId: string) {
   // History first, then the socket keeps it current.
   useEffect(() => {
     let cancelled = false;
-    unwrap(api.GET('/conversations/{conversation_id}/messages', { params: { path: { conversation_id: conversationId }, query: { limit: PAGE } } }))
+    unwrap(
+      api.GET('/conversations/{conversation_id}/messages', {
+        params: { path: { conversation_id: conversationId }, query: { limit: PAGE } },
+      }),
+    )
       .then((page) => {
         if (cancelled) return;
         messagesRef.current = page.items;
@@ -85,7 +91,12 @@ export function useConversation(conversationId: string) {
     const offState = socket.onState((connection) => setState((current) => ({ ...current, connection })));
     const unsubscribe = socket.subscribe({
       conversationId,
-      onReady: () => socket.send({ type: 'sync', conversation_id: conversationId, after_sequence_no: lastSequence(messagesRef.current) }),
+      onReady: () =>
+        socket.send({
+          type: 'sync',
+          conversation_id: conversationId,
+          after_sequence_no: lastSequence(messagesRef.current),
+        }),
       onMessage: (message) => addMessages([message]),
       onAck: (ack) => {
         addMessages([ack.message]);
@@ -94,7 +105,9 @@ export function useConversation(conversationId: string) {
       onError: (error) =>
         setState((current) => ({
           ...current,
-          outgoing: current.outgoing.map((item) => (item.clientId === error.clientId ? { ...item, failed: error.detail } : item)),
+          outgoing: current.outgoing.map((item) =>
+            item.clientId === error.clientId ? { ...item, failed: error.detail } : item,
+          ),
         })),
     });
     return () => {
@@ -105,7 +118,12 @@ export function useConversation(conversationId: string) {
 
   const deliver = useCallback(
     async (item: Outgoing) => {
-      const sent = chatSocket().send({ type: 'message.send', conversation_id: conversationId, body: item.body, client_id: item.clientId });
+      const sent = chatSocket().send({
+        type: 'message.send',
+        conversation_id: conversationId,
+        body: item.body,
+        client_id: item.clientId,
+      });
       if (sent) return;
       try {
         const result = await unwrap(
@@ -119,7 +137,9 @@ export function useConversation(conversationId: string) {
       } catch (error) {
         setState((current) => ({
           ...current,
-          outgoing: current.outgoing.map((o) => (o.clientId === item.clientId ? { ...o, failed: errorMessage(error) } : o)),
+          outgoing: current.outgoing.map((o) =>
+            o.clientId === item.clientId ? { ...o, failed: errorMessage(error) } : o,
+          ),
         }));
       }
     },
@@ -128,7 +148,12 @@ export function useConversation(conversationId: string) {
 
   const send = useCallback(
     (body: string) => {
-      const item: Outgoing = { clientId: newClientId(), body, createdAt: new Date().toISOString(), failed: null };
+      const item: Outgoing = {
+        clientId: newClientId(),
+        body,
+        createdAt: new Date().toISOString(),
+        failed: null,
+      };
       setState((current) => ({ ...current, outgoing: [...current.outgoing, item], notice: null }));
       void deliver(item);
     },
@@ -153,7 +178,10 @@ export function useConversation(conversationId: string) {
     if (!first) return;
     const page = await unwrap(
       api.GET('/conversations/{conversation_id}/messages', {
-        params: { path: { conversation_id: conversationId }, query: { before_sequence_no: first.sequence_no, limit: PAGE } },
+        params: {
+          path: { conversation_id: conversationId },
+          query: { before_sequence_no: first.sequence_no, limit: PAGE },
+        },
       }),
     );
     addMessages(page.items);
@@ -165,10 +193,17 @@ export function useConversation(conversationId: string) {
   useEffect(() => {
     if (newest <= readUpTo.current || document.visibilityState !== 'visible') return;
     readUpTo.current = newest;
-    const viaSocket = chatSocket().send({ type: 'read', conversation_id: conversationId, sequence_no: newest });
+    const viaSocket = chatSocket().send({
+      type: 'read',
+      conversation_id: conversationId,
+      sequence_no: newest,
+    });
     const done = viaSocket
       ? Promise.resolve()
-      : api.POST('/conversations/{conversation_id}/read', { params: { path: { conversation_id: conversationId } }, body: { sequence_no: newest } });
+      : api.POST('/conversations/{conversation_id}/read', {
+          params: { path: { conversation_id: conversationId } },
+          body: { sequence_no: newest },
+        });
     void done.then(() => queryClient.invalidateQueries({ queryKey: keys.conversations }));
   }, [newest, conversationId, queryClient]);
 

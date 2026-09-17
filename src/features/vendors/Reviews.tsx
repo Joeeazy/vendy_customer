@@ -17,9 +17,14 @@ export function Reviews({ slug, initial }: { slug: string; initial: ReviewsPage 
   const reviews = useInfiniteQuery({
     queryKey: keys.vendorReviews(slug),
     queryFn: ({ pageParam }) =>
-      unwrap(api.GET('/vendors/{slug}/reviews', { params: { path: { slug }, query: { offset: pageParam, limit: PAGE_SIZE } } })),
+      unwrap(
+        api.GET('/vendors/{slug}/reviews', {
+          params: { path: { slug }, query: { offset: pageParam, limit: PAGE_SIZE } },
+        }),
+      ),
     initialPageParam: 0,
-    getNextPageParam: (last) => (last.offset + last.count < last.total ? last.offset + last.count : undefined),
+    getNextPageParam: (last) =>
+      last.offset + last.count < last.total ? last.offset + last.count : undefined,
     initialData: initial ? { pages: [initial], pageParams: [0] } : undefined,
   });
 
@@ -41,7 +46,8 @@ export function Reviews({ slug, initial }: { slug: string; initial: ReviewsPage 
               <p className="flex flex-wrap items-baseline gap-x-2">
                 <span className="font-display font-bold">{review.customer_first_name}</span>
                 <span className="text-caption text-slate">
-                  <span className="tabular">{review.rating}/5</span> · {review.service_name} · {shortDate(review.created_at)}
+                  <span className="tabular">{review.rating}/5</span> · {review.service_name} ·{' '}
+                  {shortDate(review.created_at)}
                 </span>
               </p>
               {review.comment && <p className="mt-1 text-body-l">{review.comment}</p>}
@@ -51,7 +57,13 @@ export function Reviews({ slug, initial }: { slug: string; initial: ReviewsPage 
       )}
       {reviews.error && <p className="mt-3 text-caption text-clay">{errorMessage(reviews.error)}</p>}
       {reviews.hasNextPage && (
-        <Button variant="secondary" size="sm" className="mt-4" loading={reviews.isFetchingNextPage} onClick={() => void reviews.fetchNextPage()}>
+        <Button
+          variant="secondary"
+          size="sm"
+          className="mt-4"
+          loading={reviews.isFetchingNextPage}
+          onClick={() => void reviews.fetchNextPage()}
+        >
           More reviews
         </Button>
       )}

@@ -29,10 +29,18 @@ export function Wordmark({
       aria-label="vendy"
       role="img"
     >
-      <span aria-hidden="true" className={cn('font-display font-extrabold tracking-[-0.02em] font-condensed', text)}>
+      <span
+        aria-hidden="true"
+        className={cn('font-display font-extrabold tracking-[-0.02em] font-condensed', text)}
+      >
         vendy
       </span>
-      <svg aria-hidden="true" viewBox="0 0 76 7" preserveAspectRatio="none" className={cn('-mt-[1px] ml-[2px]', stroke)}>
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 76 7"
+        preserveAspectRatio="none"
+        className={cn('-mt-[1px] ml-[2px]', stroke)}
+      >
         <path
           fill="currentColor"
           d="M1.2 4.6C14 5.3 30 4.8 46 3.8c9.6-.6 18.5-1.6 25.8-2.9L75.4 0l.4 1.3C68.8 4 58 5.6 46.5 6.3 31 7.2 14.8 7.1 1 6.2.1 6.1-.2 4.7 1.2 4.6Z"

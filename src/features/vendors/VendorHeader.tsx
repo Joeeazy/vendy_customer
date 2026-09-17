@@ -9,10 +9,14 @@ function stats(vendor: VendorProfile): StatItem[] {
   const items: StatItem[] = [{ value: String(vendor.jobs_completed), label: 'jobs completed' }];
   items.push(
     vendor.rating_avg != null
-      ? { value: vendor.rating_avg.toFixed(1), label: `${vendor.rating_count} ${vendor.rating_count === 1 ? 'review' : 'reviews'}` }
+      ? {
+          value: vendor.rating_avg.toFixed(1),
+          label: `${vendor.rating_count} ${vendor.rating_count === 1 ? 'review' : 'reviews'}`,
+        }
       : { value: 'New', label: 'no reviews yet' },
   );
-  if (vendor.confirmation_rate != null) items.push({ value: `${vendor.confirmation_rate}%`, label: 'jobs confirmed' });
+  if (vendor.confirmation_rate != null)
+    items.push({ value: `${vendor.confirmation_rate}%`, label: 'jobs confirmed' });
   if (vendor.years_experience) items.push({ value: `${vendor.years_experience} yrs`, label: 'on the tools' });
   return items;
 }
@@ -20,7 +24,10 @@ function stats(vendor: VendorProfile): StatItem[] {
 /** Name, verification and the numbers that earn trust, jobs completed first. */
 export function VendorHeader({ vendor }: { vendor: VendorProfile }) {
   const items = stats(vendor);
-  const subline = [vendor.neighbourhood?.name, vendor.years_experience ? `${vendor.years_experience} years on the tools` : null]
+  const subline = [
+    vendor.neighbourhood?.name,
+    vendor.years_experience ? `${vendor.years_experience} years on the tools` : null,
+  ]
     .filter(Boolean)
     .join(' · ');
 
@@ -36,9 +43,14 @@ export function VendorHeader({ vendor }: { vendor: VendorProfile }) {
         </div>
 
         <div className="min-w-0">
-          <h1 className="hidden font-display text-[3rem] leading-tight font-extrabold font-condensed lg:block">{vendor.display_name}</h1>
+          <h1 className="hidden font-display text-[3rem] leading-tight font-extrabold font-condensed lg:block">
+            {vendor.display_name}
+          </h1>
           <p className="flex flex-wrap items-center gap-x-4 gap-y-2 text-body text-slate lg:mt-2">
-            <VerifiedMark label="ID verified" className="hidden rounded-sm bg-duka-soft px-2 py-1 lg:inline-flex" />
+            <VerifiedMark
+              label="ID verified"
+              className="hidden rounded-sm bg-duka-soft px-2 py-1 lg:inline-flex"
+            />
             {subline && <span>{subline}</span>}
             {vendor.is_founding_vendor && <span className="font-medium text-ink">Founding vendor</span>}
           </p>
@@ -55,12 +67,16 @@ export function VendorHeader({ vendor }: { vendor: VendorProfile }) {
                 className={cn(
                   'flex flex-col-reverse px-4 py-3 lg:min-w-40',
                   index > 0 && 'border-l-[1.5px] border-ink-12',
-                  items.length > 3 && index === 2 && 'border-l-0 border-t-[1.5px] sm:border-t-0 sm:border-l-[1.5px]',
+                  items.length > 3 &&
+                    index === 2 &&
+                    'border-t-[1.5px] border-l-0 sm:border-t-0 sm:border-l-[1.5px]',
                   items.length > 3 && index === 3 && 'border-t-[1.5px] sm:border-t-0',
                 )}
               >
                 <dt className="text-caption text-slate">{item.label}</dt>
-                <dd className="font-display text-display-m leading-tight font-extrabold tabular lg:text-display-l">{item.value}</dd>
+                <dd className="font-display text-display-m leading-tight font-extrabold tabular lg:text-display-l">
+                  {item.value}
+                </dd>
               </div>
             ))}
           </dl>

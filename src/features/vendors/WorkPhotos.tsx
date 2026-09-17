@@ -22,7 +22,12 @@ export function WorkPhotos({ items }: { items: PortfolioItem[] }) {
       <ul className="mt-3 grid grid-cols-2 gap-2 pt-3 hairline-t sm:grid-cols-4">
         {shown.map((item) => (
           <li key={item.id}>
-            <a href={item.urls['1200'] ?? item.urls['400']} target="_blank" rel="noreferrer" className="block">
+            <a
+              href={item.urls['1200'] ?? item.urls['400']}
+              target="_blank"
+              rel="noreferrer"
+              className="block"
+            >
               {/* Already resized to webp by the upload worker. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

@@ -32,7 +32,10 @@ export function AreaSelect({ className, tone = 'chalk' }: { className?: string; 
       <label className="sr-only" htmlFor="area-select">
         Your area
       </label>
-      <MapPin aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-slate" />
+      <MapPin
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-slate"
+      />
       <select
         id="area-select"
         value={slug ?? NEAR_ME}
@@ -50,7 +53,10 @@ export function AreaSelect({ className, tone = 'chalk' }: { className?: string; 
         ))}
       </select>
       {error && (
-        <p role="alert" className="absolute top-full right-0 z-10 mt-1 w-64 rounded-sm bg-clay-soft p-2 text-caption text-ink">
+        <p
+          role="alert"
+          className="absolute top-full right-0 z-10 mt-1 w-64 rounded-sm bg-clay-soft p-2 text-caption text-ink"
+        >
           {error}
         </p>
       )}

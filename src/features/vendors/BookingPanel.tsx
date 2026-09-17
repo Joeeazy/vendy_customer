@@ -90,7 +90,9 @@ export function BookingPanel({ vendor }: { vendor: VendorProfile }) {
           <Button type="submit" size="lg" block className="justify-start">
             Request booking
           </Button>
-          <p className="text-caption text-slate">Nothing is charged through Vendy. You pay the vendor directly.</p>
+          <p className="text-caption text-slate">
+            Nothing is charged through Vendy. You pay the vendor directly.
+          </p>
         </div>
       </form>
 

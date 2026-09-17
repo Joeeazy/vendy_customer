@@ -63,7 +63,7 @@ export default async function VendorPage({ params }: Props) {
             <Reviews slug={vendor.slug} initial={reviews} />
           </div>
 
-          <aside className="px-4 pb-6 sm:px-6 lg:bg-chalk lg:px-8 lg:py-9 lg:border-l-[1.5px] lg:border-ink-12">
+          <aside className="px-4 pb-6 sm:px-6 lg:border-l-[1.5px] lg:border-ink-12 lg:bg-chalk lg:px-8 lg:py-9">
             <div className="lg:sticky lg:top-6">
               <BookingPanel vendor={vendor} />
             </div>

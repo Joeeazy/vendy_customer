@@ -5,7 +5,15 @@ import { BrushUnderline } from './BrushStroke';
 import { cn } from './cn';
 
 /** A big Archivo number with its caption: 214 / jobs completed. */
-export function Stat({ value, label, className }: { value: ReactNode; label: ReactNode; className?: string }) {
+export function Stat({
+  value,
+  label,
+  className,
+}: {
+  value: ReactNode;
+  label: ReactNode;
+  className?: string;
+}) {
   return (
     <div className={cn('flex flex-col', className)}>
       <span className="font-display text-display-m font-extrabold tabular">{value}</span>
@@ -15,7 +23,15 @@ export function Stat({ value, label, className }: { value: ReactNode; label: Rea
 }
 
 /** A masked field explained in words, never shown as bullets. */
-export function LockedRow({ title, detail, className }: { title: ReactNode; detail?: ReactNode; className?: string }) {
+export function LockedRow({
+  title,
+  detail,
+  className,
+}: {
+  title: ReactNode;
+  detail?: ReactNode;
+  className?: string;
+}) {
   return (
     <div className={cn('flex gap-3 rounded-card bg-chalk p-4 hairline', className)}>
       <Lock aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-slate" />
@@ -50,7 +66,10 @@ export function Notice({
   className?: string;
 }) {
   return (
-    <div role={tone === 'error' ? 'alert' : 'status'} className={cn('flex gap-3 rounded-card p-4', noticeTones[tone], className)}>
+    <div
+      role={tone === 'error' ? 'alert' : 'status'}
+      className={cn('flex gap-3 rounded-card p-4', noticeTones[tone], className)}
+    >
       {icon && <span className="mt-0.5 shrink-0">{icon}</span>}
       <div className="min-w-0">
         {title && <p className="font-semibold">{title}</p>}

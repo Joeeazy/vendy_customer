@@ -58,7 +58,10 @@ describe('names and phones', () => {
 
 describe('ApiError', () => {
   it('uses the backend detail', () => {
-    const error = ApiError.from(409, { code: 'booking.cancel_after_start', detail: "Work has started, so this booking can't be cancelled." });
+    const error = ApiError.from(409, {
+      code: 'booking.cancel_after_start',
+      detail: "Work has started, so this booking can't be cancelled.",
+    });
     expect(error.code).toBe('booking.cancel_after_start');
     expect(errorMessage(error)).toBe("Work has started, so this booking can't be cancelled.");
   });
@@ -67,7 +70,9 @@ describe('ApiError', () => {
     const error = ApiError.from(422, {
       code: 'validation_error',
       detail: 'The request is invalid.',
-      errors: [{ loc: ['body', 'phone'], msg: 'Value error, Enter a Kenyan mobile number, e.g. 0712 345 678.' }],
+      errors: [
+        { loc: ['body', 'phone'], msg: 'Value error, Enter a Kenyan mobile number, e.g. 0712 345 678.' },
+      ],
     });
     expect(error.fieldErrors).toEqual({ phone: 'Enter a Kenyan mobile number, e.g. 0712 345 678.' });
     expect(error.message).toBe('Enter a Kenyan mobile number, e.g. 0712 345 678.');

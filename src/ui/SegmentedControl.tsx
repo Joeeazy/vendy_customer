@@ -23,7 +23,12 @@ export function SegmentedControl<T extends string>({
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
-    const step = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 0;
+    const step =
+      event.key === 'ArrowRight' || event.key === 'ArrowDown'
+        ? 1
+        : event.key === 'ArrowLeft' || event.key === 'ArrowUp'
+          ? -1
+          : 0;
     if (!step) return;
     event.preventDefault();
     const next = (index + step + options.length) % options.length;
@@ -34,7 +39,11 @@ export function SegmentedControl<T extends string>({
   }
 
   return (
-    <div role="radiogroup" aria-label={label} className={cn('grid auto-cols-fr grid-flow-col gap-1', className)}>
+    <div
+      role="radiogroup"
+      aria-label={label}
+      className={cn('grid auto-cols-fr grid-flow-col gap-1', className)}
+    >
       {options.map((option, index) => {
         const selected = option.value === value;
         return (

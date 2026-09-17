@@ -8,5 +8,7 @@ export const loadVendor = cache((slug: string) =>
 );
 
 export const loadRecentReviews = cache((slug: string) =>
-  orNotFound(serverApi(60).GET('/vendors/{slug}/reviews', { params: { path: { slug }, query: { limit: 5 } } })),
+  orNotFound(
+    serverApi(60).GET('/vendors/{slug}/reviews', { params: { path: { slug }, query: { limit: 5 } } }),
+  ),
 );
