@@ -22,6 +22,25 @@ function dayKey(date: Date): string {
   return parts(date, { year: 'numeric', month: '2-digit', day: '2-digit' });
 }
 
+/**
+ * Thu 17 Sep / 17 Sep. Built from parts because some ICU versions abbreviate
+ * September as "Sept"; every month here is three letters, as in the designs.
+ */
+function calendarDay(date: Date, withWeekday: boolean): string {
+  const values = Object.fromEntries(
+    new Intl.DateTimeFormat(LOCALE, {
+      timeZone: TIME_ZONE,
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+    })
+      .formatToParts(date)
+      .map((part) => [part.type, part.value]),
+  );
+  const day = `${values.day} ${String(values.month).slice(0, 3)}`;
+  return withWeekday ? `${String(values.weekday).slice(0, 3)} ${day}` : day;
+}
+
 /** 2:00 pm */
 export function clockTime(iso: string): string {
   return parts(new Date(iso), { hour: 'numeric', minute: '2-digit', hour12: true })
@@ -38,13 +57,13 @@ export function when(iso: string, now: Date = new Date()): string {
       ? 'Today'
       : dayKey(date) === dayKey(tomorrow)
         ? 'Tomorrow'
-        : parts(date, { weekday: 'short', day: 'numeric', month: 'short' });
+        : calendarDay(date, true);
   return `${day}, ${clockTime(iso)}`;
 }
 
 /** 2 Sep */
 export function shortDate(iso: string): string {
-  return parts(new Date(iso), { day: 'numeric', month: 'short' });
+  return calendarDay(new Date(iso), false);
 }
 
 /** just now · 8 min ago · 3 hrs ago · yesterday · 2 Sep */

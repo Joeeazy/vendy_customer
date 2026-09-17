@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { ApiError, errorMessage } from './errors';
-import { ago, distance, firstName, kes, phone, telHref, when } from './format';
+import { ago, distance, firstName, kes, phone, shortDate, telHref, when } from './format';
 
 describe('kes', () => {
   it('formats whole shillings with grouping', () => {
@@ -31,6 +31,11 @@ describe('when (East Africa Time)', () => {
   it('rolls to the next day at midnight Nairobi time, not UTC', () => {
     // 22:30 UTC on the 15th is 01:30 on the 16th in Nairobi.
     expect(when('2026-09-15T22:30:00Z', now)).toBe('Tomorrow, 1:30 am');
+  });
+
+  it('writes other days with three-letter weekday and month', () => {
+    expect(when('2026-09-17T07:00:00Z', now)).toBe('Thu 17 Sep, 10:00 am');
+    expect(shortDate('2026-09-02T09:00:00Z')).toBe('2 Sep');
   });
 });
 
