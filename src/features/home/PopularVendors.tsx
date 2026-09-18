@@ -25,7 +25,7 @@ export function PopularVendors() {
     <section className="mx-auto mt-12 max-w-[1440px] px-4 sm:px-6 lg:px-12" aria-labelledby="popular-heading">
       <div className="flex items-baseline justify-between gap-4 pb-3 hairline-b">
         <h2 id="popular-heading" className="font-display text-title font-bold lg:text-display-m">
-          Popular in {label}
+          Busiest in {label}
         </h2>
         <Link
           href={slug ? `/search?area=${slug}` : '/search'}

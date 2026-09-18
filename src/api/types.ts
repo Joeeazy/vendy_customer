@@ -8,6 +8,7 @@ export type User = Schemas['UserOut'];
 export type Category = Schemas['CategoryOut'];
 export type ServiceTypeDetail = Schemas['ServiceTypeOut'];
 export type Neighbourhood = Schemas['NeighbourhoodOut'];
+export type PublicStats = Schemas['PublicStatsOut'];
 
 export type VendorCard = Schemas['VendorCard'];
 export type VendorSearchResult = Schemas['VendorSearchResult'];

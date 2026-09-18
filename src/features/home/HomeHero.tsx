@@ -2,7 +2,7 @@
 
 import { Check } from 'lucide-react';
 
-import type { Category } from '@/api/types';
+import type { Category, PublicStats } from '@/api/types';
 import { useArea } from '@/features/area/area';
 import { CategoryGrid } from '@/features/catalog/CategoryGrid';
 import { ServiceSearch } from '@/features/catalog/ServiceSearch';
@@ -14,9 +14,10 @@ const PROMISES = [
   'Your number is shared only when a vendor confirms your booking.',
 ];
 
-export function HomeHero({ categories }: { categories: Category[] }) {
+export function HomeHero({ categories, stats }: { categories: Category[]; stats: PublicStats | null }) {
   const { slug, neighbourhoods } = useArea();
-  const vendorCount = categories.reduce((total, category) => total + category.vendor_count, 0);
+  const vendorCount = stats?.verified_vendors ?? 0;
+  const areaCount = stats?.areas ?? neighbourhoods.length;
 
   return (
     <>
@@ -33,7 +34,7 @@ export function HomeHero({ categories }: { categories: Category[] }) {
 
           <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-1 text-caption text-slate">
             {vendorCount > 0 && <li>{vendorCount} verified vendors</li>}
-            {neighbourhoods.length > 0 && <li>{neighbourhoods.length} Nairobi areas</li>}
+            {areaCount > 0 && <li>{areaCount} Nairobi areas</li>}
             <li>Phone numbers stay private until you book</li>
           </ul>
         </div>

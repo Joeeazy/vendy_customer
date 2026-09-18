@@ -92,6 +92,12 @@ export function SiteHeader({ children, className }: { children?: ReactNode; clas
             <Link href="/search" className="font-semibold">
               Find a vendor
             </Link>
+            <Link href="/#how-it-works" className="text-ink-80 hover:text-ink">
+              How it works
+            </Link>
+            <Link href="/#safety" className="text-ink-80 hover:text-ink">
+              Safety
+            </Link>
             {status === 'signed-in' && (
               <Link href="/bookings" className="text-ink-80 hover:text-ink">
                 My bookings

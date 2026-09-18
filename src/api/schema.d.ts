@@ -216,6 +216,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/catalog/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Public Stats
+         * @description The numbers on the home page: verified vendors taking bookings, areas covered, jobs completed.
+         */
+        get: operations["public_stats_catalog_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/catalog/service-types/{slug}": {
         parameters: {
             query?: never;
@@ -1478,6 +1498,15 @@ export interface components {
              */
             created_at: string;
         };
+        /** PublicStatsOut */
+        PublicStatsOut: {
+            /** Verified Vendors */
+            verified_vendors: number;
+            /** Areas */
+            areas: number;
+            /** Jobs Completed */
+            jobs_completed: number;
+        };
         /** PushConfigOut */
         PushConfigOut: {
             /** Enabled */
@@ -2219,6 +2248,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CategoryOut"][];
+                };
+            };
+        };
+    };
+    public_stats_catalog_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicStatsOut"];
                 };
             };
         };
